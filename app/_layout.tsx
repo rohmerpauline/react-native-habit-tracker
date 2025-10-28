@@ -1,28 +1,32 @@
 import { Stack } from 'expo-router';
 
-import { SessionProvider, useSession } from '@/contexts/AuthContext';
+import { AuthProvider, useAuth } from '@/contexts/AuthContext';
 import { SplashScreenController } from '../splash';
 
 export default function Root() {
   return (
-    <SessionProvider>
+    <AuthProvider>
       <SplashScreenController />
       <RootNavigator />
-    </SessionProvider>
+    </AuthProvider>
   );
 }
 
 function RootNavigator() {
-  const { session } = useSession();
+  const { user, isLoadingUser } = useAuth();
+
+  if (isLoadingUser) {
+    return null;
+  }
 
   return (
     <Stack>
-      <Stack.Protected guard={!!session}>
+      <Stack.Protected guard={!!user}>
         <Stack.Screen name="(app)" options={{ headerShown: false }} />
       </Stack.Protected>
 
-      <Stack.Protected guard={!session}>
-        <Stack.Screen name="auth" options={{ headerShown: false }} />
+      <Stack.Protected guard={!user}>
+        <Stack.Screen name="auth" />
       </Stack.Protected>
     </Stack>
   );

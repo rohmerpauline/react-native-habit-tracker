@@ -1,12 +1,12 @@
 import { SplashScreen } from 'expo-router';
-import { useSession } from './contexts/AuthContext';
+import { useAuth } from './contexts/AuthContext';
 
 SplashScreen.preventAutoHideAsync();
 
 export function SplashScreenController() {
-  const { isLoading } = useSession();
+  const { isLoadingUser } = useAuth();
 
-  if (!isLoading) {
+  if (!isLoadingUser) {
     SplashScreen.hide();
   }
 
