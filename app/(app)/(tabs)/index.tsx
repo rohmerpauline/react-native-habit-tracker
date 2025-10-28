@@ -8,7 +8,7 @@ export default function Index() {
   return (
     <View style={styles.view}>
       <Text>Home page</Text>
-      <Button mode="text" onPress={signOut}>
+      <Button mode="text" onPress={signOut} icon={'logout'}>
         Sign Out
       </Button>
     </View>

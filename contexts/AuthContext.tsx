@@ -30,7 +30,11 @@ export function AuthProvider({ children }: PropsWithChildren) {
 
   const signUp = async (email: string, password: string) => {
     try {
-      await account.create(ID.unique(), email, password);
+      await account.create({
+        userId: ID.unique(),
+        email: email,
+        password: password,
+      });
       await signIn(email, password);
       await getUser();
       return null;
@@ -45,7 +49,10 @@ export function AuthProvider({ children }: PropsWithChildren) {
 
   const signIn = async (email: string, password: string) => {
     try {
-      await account.createEmailPasswordSession(email, password);
+      await account.createEmailPasswordSession({
+        email: email,
+        password: password,
+      });
       await getUser();
       return null;
     } catch (error) {
@@ -59,7 +66,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
 
   const signOut = async () => {
     try {
-      await account.deleteSession('current');
+      await account.deleteSession({ sessionId: 'current' });
       setUser(null);
     } catch (error) {
       console.log(error);
