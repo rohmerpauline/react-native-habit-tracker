@@ -1,5 +1,5 @@
 import { useAuth } from '@/contexts/AuthContext';
-import { DATABASE_ID, databases, HABITS_TABLE_ID } from '@/lib/appwrite';
+import { DATABASE_ID, HABITS_TABLE_ID, tablesDB } from '@/lib/appwrite';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
@@ -28,10 +28,10 @@ const AddHabitScreen = () => {
     if (!user) return;
 
     try {
-      await databases.createDocument({
+      await tablesDB.createRow({
         databaseId: DATABASE_ID,
-        collectionId: HABITS_TABLE_ID,
-        documentId: ID.unique(),
+        tableId: HABITS_TABLE_ID,
+        rowId: ID.unique(),
         data: {
           user_id: user.$id,
           title: title,

@@ -1,20 +1,22 @@
-import { Stack } from 'expo-router';
-
 import { AuthProvider, useAuth } from '@/contexts/AuthContext';
+import { Stack } from 'expo-router';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { PaperProvider } from 'react-native-paper';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { SplashScreenController } from '../splash';
 
 export default function Root() {
   return (
-    <AuthProvider>
-      <PaperProvider>
-        <SafeAreaProvider>
-          <SplashScreenController />
-          <RootNavigator />
-        </SafeAreaProvider>
-      </PaperProvider>
-    </AuthProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <AuthProvider>
+        <PaperProvider>
+          <SafeAreaProvider>
+            <SplashScreenController />
+            <RootNavigator />
+          </SafeAreaProvider>
+        </PaperProvider>
+      </AuthProvider>
+    </GestureHandlerRootView>
   );
 }
 
