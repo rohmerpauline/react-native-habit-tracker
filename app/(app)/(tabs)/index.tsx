@@ -74,6 +74,25 @@ export default function Index() {
     }
   };
 
+  const fetchTodayCompletions = async () => {
+    try {
+      const today = new Date();
+      today.setHours(0, 0, 0);
+
+      const result = await tablesDB.listRows({
+        databaseId: DATABASE_ID,
+        tableId: COMPLETION_TABLE_ID,
+        queries: [
+          Query.equal('user_id', user?.$id ?? ''),
+          Query.greaterThanEqual('completed_at', today.toISOString()),
+        ],
+      });
+
+      const completions = result.rows as HabitCompletion[];
+      setCompletedHabits(completions.map((c) => c.habit_id));
+    } catch (error) {}
+  };
+
   const handleDeleteHabit = async (id: string) => {
     try {
       await tablesDB.deleteRow({
@@ -115,25 +134,6 @@ export default function Index() {
     } catch (error) {
       console.error(error);
     }
-  };
-
-  const fetchTodayCompletions = async () => {
-    try {
-      const today = new Date();
-      today.setHours(0, 0, 0);
-
-      const result = await tablesDB.listRows({
-        databaseId: DATABASE_ID,
-        tableId: COMPLETION_TABLE_ID,
-        queries: [
-          Query.equal('user_id', user?.$id ?? ''),
-          Query.greaterThanEqual('completed_at', today.toISOString()),
-        ],
-      });
-
-      const completions = result.rows as HabitCompletion[];
-      setCompletedHabits(completions.map((c) => c.habit_id));
-    } catch (error) {}
   };
 
   const isHabitCompleted = (habitId: string) =>
@@ -275,7 +275,7 @@ const styles = StyleSheet.create({
     elevation: 4,
   },
   cardCompletedCard: {
-    opacity: 0.6,
+    opacity: 0.8,
   },
   cardContent: {
     padding: 20,
