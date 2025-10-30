@@ -59,9 +59,7 @@ Each issus pushed me to read documentation deeply and truly understand how each 
 
 This project confirmed my interest in investigating React Native further and I'm already planning my next personal app to keep learning and experimenting.
 
-# Welcome to your Expo app 👋
-
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+---
 
 ## Get started
 
